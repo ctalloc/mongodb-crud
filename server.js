@@ -60,5 +60,14 @@ MongoClient.connect('mongodb+srv://grogu:pa55w0rd@cluster0.w04ud.mongodb.net/myF
        })
         .catch(error => console.error(error))
     })
+    app.delete('/quotes', (req,res) => {
+        quotesCollection.deleteOne(
+            {name: req.body.name},
+        )
+        .then(result => {
+            res.json(`Deleted Darth Vader's quote`)
+        })
+        .catch(error =>console.error(error))
+    })
 });
 
