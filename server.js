@@ -58,12 +58,6 @@ MongoClient.connect('mongodb+srv://grogu:pa55w0rd@cluster0.w04ud.mongodb.net/myF
        .then (result => {
            res.json('Success')
        })
-       .then(res => {
-           if(res.ok) return res.json()
-       })
-       .then(response => {
-           console.log(response);
-       })
         .catch(error => console.error(error))
     })
 });
