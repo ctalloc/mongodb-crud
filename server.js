@@ -23,6 +23,9 @@ MongoClient.connect('mongodb+srv://grogu:pa55w0rd@cluster0.w04ud.mongodb.net/myF
     });
 
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    app.use(express.static('public'));
 
     app.get('/', (req, res) => {
         db.collection('quotes').find().toArray()
@@ -38,6 +41,30 @@ MongoClient.connect('mongodb+srv://grogu:pa55w0rd@cluster0.w04ud.mongodb.net/myF
                 res.redirect('/')
             })
             .catch(error => console.error(error))
+    })
+    app.put('/quotes', (req,res) => {
+        quotesCollection.findOneAndUpdate(
+            {name:'Yoda'},
+            {
+                $set: {
+                    name: req.body.name,
+                    quote: req.body.quote
+                }
+            },
+            {
+                upsert: true
+            }
+        )
+       .then (result => {
+           res.json('Success')
+       })
+       .then(res => {
+           if(res.ok) return res.json()
+       })
+       .then(response => {
+           console.log(response);
+       })
+        .catch(error => console.error(error))
     })
 });
 
